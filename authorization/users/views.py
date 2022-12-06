@@ -3,6 +3,7 @@ from rest_framework import generics, viewsets
 from django.shortcuts import render
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.decorators import action
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAdminUser, IsAuthenticated
@@ -26,10 +27,16 @@ from .serializers import PersonSerializer
 #         cats = Category.objects.get(pk=pk)
 #         return Response({'cats':cats.name})
 
+class PersonAPIListPagination(PageNumberPagination): #  для отдельных API запросов настройка cвоих параметров пагинации
+    page_size = 3
+    page_size_query_param = 'page_size'
+    max_page_size = 10000
+
 class PersonAPIList(generics.ListCreateAPIView):
     queryset = Person.objects.all()
     serializer_class = PersonSerializer
     permission_classes = (IsAuthenticatedOrReadOnly,) #ограничение доступа лицам
+    pagination_class = PersonAPIListPagination #(код пишется когда есть пагинация)подключение этого класса к классу пагинации
 
 class PersonAPIUpdate(generics.UpdateAPIView):
     queryset = Person.objects.all()
