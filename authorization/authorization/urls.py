@@ -19,5 +19,5 @@ from users.views import *
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/userlist',UserAPIList.as_view()),
-    path('api/v1/userlist/<int:pk>/',UserAPIList.as_view()),
+    path('api/v1/userlist/<int:pk>/',UserAPIUpdate.as_view()),
 ]
