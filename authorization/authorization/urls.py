@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path,include
+from django.urls import path, include, re_path
 from users.views import *
 from rest_framework import routers#создание роутера
 
@@ -44,6 +44,8 @@ urlpatterns = [
     path('api/v1/person/', PersonAPIList.as_view()),
     path('api/v1/person/<int:pk>/',PersonAPIUpdate.as_view()), # для изменения записей
     path('api/v1/persondelete/<int:pk>/',PersonAPIDestroy.as_view()),# для удаления записей
+    path('api/v1/auth/', include('djoser.urls')), #подключение пакета джойсер
+    re_path(r'^auth/', include('djoser.urls.authtoken')), #подключение пакета джойсер
 
     # path('api/v1/',include(routers.urls)), #http://127.0.0.1:8000/api/v1/person/   использование роутера
 

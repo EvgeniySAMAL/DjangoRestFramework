@@ -1,10 +1,11 @@
 from django.forms import model_to_dict
 from rest_framework import generics, viewsets
 from django.shortcuts import render
+from rest_framework.authentication import TokenAuthentication
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAdminUser
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAdminUser, IsAuthenticated
 
 from .models import Person, Category
 from .permissions import IsAdminOrReadOnly, IsOwnerOrReadOnly
@@ -33,7 +34,9 @@ class PersonAPIList(generics.ListCreateAPIView):
 class PersonAPIUpdate(generics.UpdateAPIView):
     queryset = Person.objects.all()
     serializer_class = PersonSerializer
-    permission_classes = (IsOwnerOrReadOnly,) #функционал изменения записи, доступен только автору
+    permission_classes = (IsAuthenticated,) #функционал изменения записи, доступен только автору(IsOwnerOrReadOnly)
+                                            #содержимое записи, доступен только авторизованным пользователям(IsAuthenticated)
+    authentication_classes = (TokenAuthentication,) #предоставляет доступ только по токенам
 
 
 class PersonAPIDestroy(generics.RetrieveUpdateDestroyAPIView):
