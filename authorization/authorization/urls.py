@@ -18,8 +18,25 @@ from django.urls import path,include
 from users.views import *
 from rest_framework import routers#создание роутера
 
-routers = routers.SimpleRouter() #создание роутера
-routers.register(r'user',UserViewSet)#регистрация UserViewSet
+class MyCustomRouter(routers.SimpleRouter): #создание класса роутера
+    routers = [
+        routers.Route(url=r'{prerix}$',      #читает список статей
+                      mapping={'get':'list'},
+                      name='{basename}-list',
+                      detail=False,
+                      initkwargs={'suffix':'List'}),
+        routers.Route(url=r'{prefix}/{lookup}$', #читаетстатью по её индификатору
+                      mapping={'get': 'retrieve'},
+                      name='{basename}-detail',
+                      detail=True,
+                      initkwargs={'suffix': 'Detail'}),
+    ]
+
+# routers = routers.SimpleRouter() #создание роутера
+# routers = routers.DefaultRouter() #создание роутера
+routers = MyCustomRouter()
+routers.register(r'user',UserViewSet,basename='user')#регистрация UserViewSet
+print(routers.urls)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
