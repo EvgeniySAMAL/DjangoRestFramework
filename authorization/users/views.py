@@ -7,6 +7,9 @@ from rest_framework.views import APIView
 from .models import User
 from .serializers import UserSerializer
 
+class UserAPIList(generics.ListCreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
 
 class UserApiView(APIView):
     def get(self,request):
