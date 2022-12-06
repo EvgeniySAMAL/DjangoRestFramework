@@ -20,4 +20,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/userlist',UserAPIList.as_view()),
     path('api/v1/userlist/<int:pk>/',UserAPIUpdate.as_view()),
+    path('api/v1/userdetail/<int:pk>/',UserAPIDetailView.as_view()),
 ]
