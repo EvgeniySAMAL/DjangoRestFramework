@@ -40,6 +40,7 @@ from rest_framework import routers#создание роутера
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/v1/dfr-auth/', include('rest_framework.urls')), #авторизация на уровне сессии
     path('api/v1/person/', PersonAPIList.as_view()),
     path('api/v1/person/<int:pk>/',PersonAPIUpdate.as_view()), # для изменения записей
     path('api/v1/persondelete/<int:pk>/',PersonAPIDestroy.as_view()),# для удаления записей
