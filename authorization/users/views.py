@@ -36,7 +36,7 @@ class PersonAPIUpdate(generics.UpdateAPIView):
     serializer_class = PersonSerializer
     permission_classes = (IsAuthenticated,) #функционал изменения записи, доступен только автору(IsOwnerOrReadOnly)
                                             #содержимое записи, доступен только авторизованным пользователям(IsAuthenticated)
-    authentication_classes = (TokenAuthentication,) #предоставляет доступ только по токенам
+   # authentication_classes = (TokenAuthentication,) #предоставляет доступ только по токенам
 
 
 class PersonAPIDestroy(generics.RetrieveUpdateDestroyAPIView):
